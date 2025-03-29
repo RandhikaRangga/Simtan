@@ -164,7 +164,7 @@
                         <li class="nav-header">WILAYAH</li>
 
                         <li class="nav-item">
-                            <a href=" " class="nav-link">
+                            <a href="<?= site_url('Admin-Lahan') ?>" class="nav-link">
                                 <i class="nav-icon fa-solid fa-map"></i>
                                 <p>Data Lahan</p>
                             </a>

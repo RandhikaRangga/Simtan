@@ -96,6 +96,13 @@ $route['Admin-ConvertExcelLaporanPanen'] = 'LaporanPanen/export_excel';
 $route['Admin-LaporanProduksi'] = 'LaporanProduksi/view_admin';
 $route['Admin-ConvertExcelLaporanProduksi'] = 'LaporanProduksi/export_excel';
 
+$route['Admin-Lahan'] = 'Lahan';
+$route['Admin-TambahLahan'] = 'Lahan/tambah_lahan';
+$route['Admin-EditLahan/(:num)'] = 'Lahan/edit_lahan/$1';
+$route['Admin-HapusLahan/(:num)'] = 'Lahan/hapus_lahan/$1';
+
+$route['Admin-Map'] = 'Lahan/view_map';
+
 // Routes Kepala Kantor
 $route['Kepala_Kantor'] = 'KepalaKantor';
 $route['KK-DataLahan'] = 'KepalaKantor/lahan';
