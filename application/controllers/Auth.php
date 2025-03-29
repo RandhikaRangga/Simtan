@@ -73,14 +73,17 @@ class Auth extends CI_Controller {
                     redirect('Penyuluh');
                 } else if ($user->role == 'kepala_kantor') {
                     redirect('kepalakantor');
+                } else {
+                    // Tampilkan pesan error jika username atau password salah
+                    $this->session->set_flashdata('error', 'Username atau password salah');
+                    redirect('auth');
+                }  
             } else {
-                // Tampilkan pesan error jika username atau password salah
                 $this->session->set_flashdata('error', 'Username atau password salah');
                 redirect('auth');
-            }
+            }              
         }
     }
-}
 
     // Logout
     public function logout() {

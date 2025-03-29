@@ -44,8 +44,12 @@
                 <div class="row mb-3">
                     <label for="inputPasswordl3" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" name="Password" id="inputPassword3"
-                            value="<?= $record->password; ?>" />
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="Password" id="inputPassword3"
+                                value="<?= $record->password; ?>" />
+                            <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
+                                <i id="eyeIcon" class="fas fa-eye-slash"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -74,3 +78,20 @@
         <!--end::Form-->
     </div>
 </div>
+
+<script>
+function togglePassword() {
+    var pass = document.getElementById("inputPassword3");
+    var eyeIcon = document.getElementById("eyeIcon");
+
+    if (pass.type === "password") {
+        pass.type = "text";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+    } else {
+        pass.type = "password";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+    }
+}
+</script>

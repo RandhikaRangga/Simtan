@@ -101,7 +101,7 @@ $route['Admin-TambahLahan'] = 'Lahan/tambah_lahan';
 $route['Admin-EditLahan/(:num)'] = 'Lahan/edit_lahan/$1';
 $route['Admin-HapusLahan/(:num)'] = 'Lahan/hapus_lahan/$1';
 
-$route['Admin-Map'] = 'Lahan/view_map';
+$route['Admin-Map'] = 'Lahan/map_admin';
 
 // Routes Kepala Kantor
 $route['Kepala_Kantor'] = 'KepalaKantor';

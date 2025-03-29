@@ -24,7 +24,7 @@ class Lahan extends CI_Controller {
         $this->load->model('User_model');
 		$this->load->model('Lahan_model');
 
-        if (!$this->session->userdata('logged_in')) {
+        if (!$this->session->userdata('logged_in') || $this->session->userdata('role') != 'admin') {
             redirect('auth');
         }
     }
@@ -130,4 +130,26 @@ class Lahan extends CI_Controller {
 		}	
 		redirect(base_url('Admin-Lahan'));
 	}
+
+	// ============== MAP ======================
+	public function map_admin() {
+		$data['username'] = $this->session->userdata('username');
+
+		$this->load->view('admin/template-admin/header');
+		$this->load->view('admin/template-admin/sidebar', $data);
+		$this->load->view('admin/map');
+		$this->load->view('admin/template-admin/footer');
+	}
+
+	public function getPoligon() {
+		$data = $this->Lahan_model->get_lahan();
+		header('Content-Type: application/json');
+		echo json_encode($data);
+	}
+
+	public function getTotalProduksi($kecamatan_id){
+        $data = $this->Lahan_model->getTotalProduksi($kecamatan_id);
+        echo json_encode($data);
+    }
+
 }
