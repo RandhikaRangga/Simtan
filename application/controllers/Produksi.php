@@ -13,12 +13,16 @@ class Produksi extends CI_Controller {
         }
     }
 
-    public function view_admin() {
-        $role = $this->session->userdata('role');
-
-		if ($role !== 'admin') {
+    private function check_role($role_required) {
+		$role = $this->session->userdata('role');
+		
+		if ($role !== $role_required) {
 			redirect('auth/forbidden');
 		}
+	}
+
+    public function view_admin() {
+        $this->check_role('admin');
 
         // Ambil filter dari input GET
         $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');
@@ -62,11 +66,7 @@ class Produksi extends CI_Controller {
     }
 
     public function view_penyuluh() {
-        $role = $this->session->userdata('role');
-
-		if ($role !== 'penyuluh') {
-			redirect('auth/forbidden');
-		}
+        $this->check_role('penyuluh');
 
         // Ambil filter dari input GET
         $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');

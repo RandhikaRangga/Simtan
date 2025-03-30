@@ -88,13 +88,10 @@ $route['Admin-Panen'] = 'Panen/view_admin';
 $route['Admin-Produksi'] = 'Produksi/view_admin';
 
 $route['Admin-LaporanTanam'] = 'LaporanTanam/view_admin';
-$route['Admin-ConvertExcelLaporanTanam'] = 'LaporanTanam/export_excel';
 
 $route['Admin-LaporanPanen'] = 'LaporanPanen/view_admin';
-$route['Admin-ConvertExcelLaporanPanen'] = 'LaporanPanen/export_excel';
 
 $route['Admin-LaporanProduksi'] = 'LaporanProduksi/view_admin';
-$route['Admin-ConvertExcelLaporanProduksi'] = 'LaporanProduksi/export_excel';
 
 $route['Admin-Lahan'] = 'Lahan';
 $route['Admin-TambahLahan'] = 'Lahan/tambah_lahan';
@@ -104,7 +101,16 @@ $route['Admin-HapusLahan/(:num)'] = 'Lahan/hapus_lahan/$1';
 $route['Admin-Map'] = 'Lahan/map_admin';
 
 // Routes Petugas Kantor
-$route['Petugas-Kantor'] = 'PetugasKantor';
+$route['PetugasKantor'] = 'Dashboard/view_petugaskantor';
+
+$route['PetugasKantor-LaporanTanam'] = 'LaporanTanam/view_petugaskantor';
+
+$route['PetugasKantor-LaporanPanen'] = 'LaporanPanen/view_petugaskantor';
+
+$route['PetugasKantor-LaporanProduksi'] = 'LaporanProduksi/view_petugaskantor';
+
+$route['PetugasKantor-Map'] = 'Lahan/map_petugaskantor';
+
 
 // Routes Penyuluh
 $route['Penyuluh'] = 'Dashboard/view_penyuluh';

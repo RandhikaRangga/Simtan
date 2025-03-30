@@ -38,8 +38,18 @@ class LaporanTanam  extends CI_Controller {
         }
     }
 
-    // ============================== Dashboard ========================================
+    private function check_role($role_required) {
+		$role = $this->session->userdata('role');
+		
+		if ($role !== $role_required) {
+			redirect('auth/forbidden');
+		}
+	}
+
+    // ============================== View Admin ========================================
     public function view_admin(){
+        $this->check_role('admin');
+
         // Ambil filter dari input GET
         $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');
         $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
@@ -73,6 +83,45 @@ class LaporanTanam  extends CI_Controller {
         $this->load->view('admin/template-admin/sidebar', $data);
         $this->load->view('admin/laporan_tanam', $data);
         $this->load->view('admin/template-admin/footer');
+    }
+
+    // ============================== View Petugas Kantor ========================================
+    public function view_petugaskantor(){
+        $this->check_role('kantor');
+
+        // Ambil filter dari input GET
+        $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');
+        $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
+        $kecamatan = $this->input->get('kecamatan') ? $this->input->get('kecamatan') : 'all';
+        $desa = $this->input->get('desa') ? $this->input->get('desa') : 'all';
+    
+        // Ambil daftar kecamatan dan desa
+        $kecamatan_list = $this->Tanam_model->get_kecamatan();
+        $desa_list = ($kecamatan != 'all') ? $this->db->get_where('desa', ['kecamatan_id' => $kecamatan])->result() : [];
+    
+        // Ambil daftar komoditas
+        $komoditas = $this->Tanam_model->get_komoditas();
+
+        // Ambil data tanam berdasarkan filter
+        $data_tanam = $this->Tanam_model->get_data_tanam($bulan, $tahun, $kecamatan, $desa);
+    
+        // Kirim data ke view
+        $data = [
+            'komoditas' => $komoditas,
+            'data_tanam' => $data_tanam,
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'kecamatan' => $kecamatan_list,
+            'desa' => $desa_list,
+            'selected_kecamatan' => $kecamatan,
+            'selected_desa' => $desa,
+        ];
+        $data['username'] = $this->session->userdata('username');
+    
+        $this->load->view('petugas_kantor/template-pk/header');
+        $this->load->view('petugas_kantor/template-pk/sidebar', $data);
+        $this->load->view('petugas_kantor/laporan_tanam', $data);
+        $this->load->view('petugas_kantor/template-pk/footer');
     }
 
 	public function get_desa_by_kecamatan() {

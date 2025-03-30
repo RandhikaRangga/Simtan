@@ -23,7 +23,7 @@ class Auth extends CI_Controller {
                     redirect('Admin');
                     break;
                 case 'kantor':
-                    redirect('kepala_kantor');
+                    redirect('PetugasKantor');
                     break;
                 case 'penyuluh':
                     redirect('Penyuluh');
@@ -71,8 +71,8 @@ class Auth extends CI_Controller {
                     redirect('Admin');
                 } else if ($user->role == 'penyuluh') {
                     redirect('Penyuluh');
-                } else if ($user->role == 'kepala_kantor') {
-                    redirect('kepalakantor');
+                } else if ($user->role == 'kantor') {
+                    redirect('PetugasKantor');
                 } else {
                     // Tampilkan pesan error jika username atau password salah
                     $this->session->set_flashdata('error', 'Username atau password salah');

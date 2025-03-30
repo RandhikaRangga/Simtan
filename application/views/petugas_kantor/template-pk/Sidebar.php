@@ -115,6 +115,8 @@
                         <!-- DATA PERTANIAN END -->
 
                         <!-- DATA Wilayah -->
+                        <li class="nav-header">WILAYAH</li>
+
                         <li class="nav-item">
                             <a href="<?= site_url('PetugasKantor-Map') ?>" class="nav-link">
                                 <i class="nav-icon fa-solid fa-map-location-dot"></i>

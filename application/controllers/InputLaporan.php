@@ -35,12 +35,17 @@ class InputLaporan extends CI_Controller {
         }
     }
 
-    public function view_admin(){
+	// Check Role
+	private function check_role($role_required) {
 		$role = $this->session->userdata('role');
-
-		if ($role !== 'admin') {
+		
+		if ($role !== $role_required) {
 			redirect('auth/forbidden');
 		}
+	}
+
+    public function view_admin(){
+		$this->check_role('admin');
 
         $data['username'] = $this->session->userdata('username');
 		$data['laporan'] = $this->Laporan_model->getGroupedData();
@@ -53,11 +58,7 @@ class InputLaporan extends CI_Controller {
     }
 
 	public function view_penyuluh(){
-		$role = $this->session->userdata('role');
-
-		if ($role !== 'penyuluh') {
-			redirect('auth/forbidden');
-		}
+		$this->check_role('penyuluh');
 
         $data['username'] = $this->session->userdata('username');
 		$data['laporan'] = $this->Laporan_model->getGroupedDataP();
@@ -85,11 +86,7 @@ class InputLaporan extends CI_Controller {
 	}
 
 	public function tambah_laporan_admin() {
-		$role = $this->session->userdata('role');
-
-		if ($role !== 'admin') {
-			redirect('auth/forbidden');
-		}
+		$this->check_role('admin');
 
 		$data['username'] = $this->session->userdata('username');
 		$data['komoditas'] = $this->Komoditas_model->get_all_data();
@@ -102,11 +99,7 @@ class InputLaporan extends CI_Controller {
 	}
 
 	public function tambah_laporan_penyuluh() {
-		$role = $this->session->userdata('role');
-
-		if ($role !== 'penyuluh') {
-			redirect('auth/forbidden');
-		}
+		$this->check_role('penyuluh');
 
 		$data['username'] = $this->session->userdata('username');
 		$data['komoditas'] = $this->Komoditas_model->get_all_data();
@@ -216,11 +209,7 @@ class InputLaporan extends CI_Controller {
 	}
 
 	public function edit_laporan_admin($batch_id) {
-		$role = $this->session->userdata('role');
-
-		if ($role !== 'admin') {
-			redirect('auth/forbidden');
-		}
+		$this->check_role('admin');
 		
         $data['batch_id'] = $batch_id;
 		$data['kecamatan'] = $this->Kecamatan_model->get_all_data();
@@ -242,11 +231,7 @@ class InputLaporan extends CI_Controller {
     }
 
 	public function edit_laporan_penyuluh($batch_id) {
-		$role = $this->session->userdata('role');
-
-		if ($role !== 'penyuluh') {
-			redirect('auth/forbidden');
-		}
+		$this->check_role('penyuluh');
 
         $data['batch_id'] = $batch_id;
 		$data['kecamatan'] = $this->Kecamatan_model->get_all_data();
