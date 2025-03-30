@@ -263,11 +263,43 @@ sparkline3.render();
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
 $(document).ready(function() {
     $('#tanam').DataTable({
         responsive: true,
+        columnDefs: [{
+            targets: -1, // Kolom terakhir (Aksi)
+            orderable: false // Menonaktifkan sorting untuk kolom ini
+        }],
+        dom: "<'row'<'col-md-6'l><'col-md-6'f>>" + // Baris 1: Show entries (l) dan Search bar (f)
+            "<'row'<'col-12'tr>>" + // Baris 2: Tabel (t)
+            "<'row'<'col-md-6'i><'col-md-6'p>>", // Baris 3: Info (i) dan Pagination (p)
+        language: {
+            search: "Cari:",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+            paginate: {
+                previous: '<i class="fa-solid fa-arrow-left"></i> Previous',
+                next: 'Next <i class="fa-solid fa-arrow-right"></i>'
+            }
+        }
+    });
+    $('#btnTambahData').on('click', function() {
+        alert('Tombol tambah data diklik!');
+        // Bisa menambahkan logika untuk membuka form atau modal untuk menambah data
+    });
+});
+
+$(document).ready(function() {
+    $('#datatableNormal').DataTable({
+        responsive: true,
+        columnDefs: [{
+            targets: -1, // Kolom terakhir (Aksi)
+            orderable: false // Menonaktifkan sorting untuk kolom ini
+        }],
         dom: "<'row'<'col-md-6'l><'col-md-6'f>>" + // Baris 1: Show entries (l) dan Search bar (f)
             "<'row'<'col-12'tr>>" + // Baris 2: Tabel (t)
             "<'row'<'col-md-6'i><'col-md-6'p>>", // Baris 3: Info (i) dan Pagination (p)
@@ -313,6 +345,8 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!--end::Script-->
 </body>

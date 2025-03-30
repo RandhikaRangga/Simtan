@@ -5,8 +5,8 @@
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
-            <li class="breadcrumb-item"><a href="Admin">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="Admin-InputLaporan">Data Laporan</a></li>
+            <li class="breadcrumb-item"><a href="Penyuluh">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="Penyuluh-InputLaporan">Data Laporan</a></li>
             <li class="breadcrumb-item active" aria-current="page">Edit Data Laporan</li>
         </ol>
     </div>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="text-end mt-3">
-                            <a href="<?= base_url('Admin-InputLaporan') ?>" class="btn btn-danger">Batal</a>
+                            <a href="<?= base_url('Penyuluh-InputLaporan') ?>" class="btn btn-danger">Kembali</a>
                             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                         </div>
                     </div>

@@ -24,7 +24,7 @@ class Lahan extends CI_Controller {
         $this->load->model('User_model');
 		$this->load->model('Lahan_model');
 
-        if (!$this->session->userdata('logged_in') || $this->session->userdata('role') != 'admin') {
+        if (!$this->session->userdata('logged_in')) {
             redirect('auth');
         }
     }
@@ -139,6 +139,15 @@ class Lahan extends CI_Controller {
 		$this->load->view('admin/template-admin/sidebar', $data);
 		$this->load->view('admin/map');
 		$this->load->view('admin/template-admin/footer');
+	}
+
+	public function map_penyuluh() {
+		$data['username'] = $this->session->userdata('username');
+
+		$this->load->view('penyuluh/template-penyuluh/header');
+		$this->load->view('penyuluh/template-penyuluh/sidebar', $data);
+		$this->load->view('penyuluh/map');
+		$this->load->view('penyuluh/template-penyuluh/footer');
 	}
 
 	public function getPoligon() {

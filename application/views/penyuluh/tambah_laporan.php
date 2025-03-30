@@ -5,8 +5,8 @@
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
-            <li class="breadcrumb-item"><a href="Admin">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="Admin-InputLaporan">Data Laporan</a></li>
+            <li class="breadcrumb-item"><a href="Penyuluh">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="Penyuluh-InputLaporan">Data Laporan</a></li>
             <li class="breadcrumb-item active" aria-current="page">Tambah Data Laporan</li>
         </ol>
     </div>
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="text-end mt-3">
-                            <a href="Admin-InputLaporan" class="btn btn-danger">Kembali</a>
+                            <a href="Penyuluh-InputLaporan" class="btn btn-danger">Kembali</a>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>

@@ -36,6 +36,12 @@ class InputLaporan extends CI_Controller {
     }
 
     public function view_admin(){
+		$role = $this->session->userdata('role');
+
+		if ($role !== 'admin') {
+			redirect('auth/forbidden');
+		}
+
         $data['username'] = $this->session->userdata('username');
 		$data['laporan'] = $this->Laporan_model->getGroupedData();
 		$data['komoditas'] = $this->Komoditas_model->get_all_data(); 
@@ -44,6 +50,23 @@ class InputLaporan extends CI_Controller {
 		$this->load->view('admin/template-admin/sidebar', $data);
 		$this->load->view('admin/input_laporan', $data);
 		$this->load->view('admin/template-admin/footer');
+    }
+
+	public function view_penyuluh(){
+		$role = $this->session->userdata('role');
+
+		if ($role !== 'penyuluh') {
+			redirect('auth/forbidden');
+		}
+
+        $data['username'] = $this->session->userdata('username');
+		$data['laporan'] = $this->Laporan_model->getGroupedDataP();
+		$data['komoditas'] = $this->Komoditas_model->get_all_data(); 
+
+        $this->load->view('penyuluh/template-penyuluh/header');
+		$this->load->view('penyuluh/template-penyuluh/sidebar', $data);
+		$this->load->view('penyuluh/input_laporan', $data);
+		$this->load->view('penyuluh/template-penyuluh/footer');
     }
 
 	// Untuk Modal
@@ -61,7 +84,13 @@ class InputLaporan extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function tambah_laporan() {
+	public function tambah_laporan_admin() {
+		$role = $this->session->userdata('role');
+
+		if ($role !== 'admin') {
+			redirect('auth/forbidden');
+		}
+
 		$data['username'] = $this->session->userdata('username');
 		$data['komoditas'] = $this->Komoditas_model->get_all_data();
 		$data['kecamatan'] = $this->db->get('kecamatan')->result();
@@ -72,14 +101,26 @@ class InputLaporan extends CI_Controller {
 		$this->load->view('admin/template-admin/footer');
 	}
 
+	public function tambah_laporan_penyuluh() {
+		$role = $this->session->userdata('role');
+
+		if ($role !== 'penyuluh') {
+			redirect('auth/forbidden');
+		}
+
+		$data['username'] = $this->session->userdata('username');
+		$data['komoditas'] = $this->Komoditas_model->get_all_data();
+		$data['kecamatan'] = $this->db->get('kecamatan')->result();
+		
+		$this->load->view('penyuluh/template-penyuluh/header');
+		$this->load->view('penyuluh/template-penyuluh/sidebar', $data);
+		$this->load->view('penyuluh/tambah_laporan', $data);
+		$this->load->view('penyuluh/template-penyuluh/footer');
+	}
+
 	public function simpan_data() {
 		$this->load->library('session');
-		$user_id = $this->session->userdata('user_id'); // Ambil user_id dari session
-	
-		if (!$user_id) {
-			redirect('login'); // Jika tidak ada session, arahkan ke login
-			return;
-		}
+		$user_id = $this->session->userdata('user_id');
 	
 		$tanggal = $this->input->post('tanggal');
 		$kecamatan_id = $this->input->post('kecamatan_id');
@@ -157,12 +198,16 @@ class InputLaporan extends CI_Controller {
 			$this->session->set_flashdata('error_tambah', 'Terjadi kesalahan saat menyimpan data.');
 		}
 	
+		$role = $this->session->userdata('role');
+
 		// Redirect ke halaman input laporan
-		redirect('Admin-InputLaporan');
+		if ($role == 'admin') {
+			redirect('Admin-InputLaporan');
+		} elseif ($role == 'penyuluh') {
+			redirect('Penyuluh-InputLaporan');
+		}
 		exit;
 	}
-	
-	
 
 	public function get_desa_by_kecamatan(){
     $kecamatan_id = $this->input->post('kecamatan_id');
@@ -170,7 +215,13 @@ class InputLaporan extends CI_Controller {
     echo json_encode($desa);
 	}
 
-	public function edit_laporan($batch_id) {
+	public function edit_laporan_admin($batch_id) {
+		$role = $this->session->userdata('role');
+
+		if ($role !== 'admin') {
+			redirect('auth/forbidden');
+		}
+		
         $data['batch_id'] = $batch_id;
 		$data['kecamatan'] = $this->Kecamatan_model->get_all_data();
 		$data['desa'] = $this->Desa_model->get_desa();
@@ -190,10 +241,42 @@ class InputLaporan extends CI_Controller {
 		$this->load->view('admin/template-admin/footer');
     }
 
+	public function edit_laporan_penyuluh($batch_id) {
+		$role = $this->session->userdata('role');
+
+		if ($role !== 'penyuluh') {
+			redirect('auth/forbidden');
+		}
+
+        $data['batch_id'] = $batch_id;
+		$data['kecamatan'] = $this->Kecamatan_model->get_all_data();
+		$data['desa'] = $this->Desa_model->get_desa();
+		$data['komoditas'] = $this->Komoditas_model->get_all_data();
+		$data['username'] = $this->session->userdata('username');
+
+    // Ambil data laporan berdasarkan batch_id
+		$data['laporan'] = [
+			'tanam' => $this->Laporan_model->get_tanam_by_batch($batch_id),
+			'panen' => $this->Laporan_model->get_panen_by_batch($batch_id),
+			'produksi' => $this->Laporan_model->get_produksi_by_batch($batch_id)
+		];
+        
+		$this->load->view('penyuluh/template-penyuluh/header');
+		$this->load->view('penyuluh/template-penyuluh/sidebar', $data);
+		$this->load->view('penyuluh/edit_laporan', $data);
+		$this->load->view('penyuluh/template-penyuluh/footer');
+    }
+
 	public function hapus_batch($batch_id) {
+		$role = $this->session->userdata('role');
+
 		if (!$batch_id) {
 			$this->session->set_flashdata('error', 'Batch ID tidak ditemukan.');
-			redirect('Admin-InputLaporan'); // Ganti dengan halaman tujuan
+			if($role == 'admin'){
+				redirect('Admin-InputLaporan');
+			} elseif($role == 'penyuluh') {
+				redirect('Penyuluh-InputLaporan');
+			}
 		}
 	
 		if ($this->Laporan_model->hapus_batch($batch_id)) {
@@ -202,8 +285,10 @@ class InputLaporan extends CI_Controller {
 			$this->session->set_flashdata('error', 'Gagal menghapus data. Pastikan semua data bisa dihapus.');
 		}
 	
-		redirect('Admin-InputLaporan'); // Kembali ke halaman daftar batch
+		if($role == 'admin') {
+			redirect('Admin-InputLaporan');
+		} elseif($role == 'penyuluh') {
+			redirect('Penyuluh-InputLaporan');
+		}
 	}
-
-	
 }

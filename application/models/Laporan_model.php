@@ -20,6 +20,23 @@ class Laporan_model extends CI_Model {
         return $query->result();
     }
 
+    // Untuk Penyuluh
+    public function getGroupedDataP(){
+        $user_id = $this->session->userdata('user_id');
+
+        $this->db->select('batch_id, MAX(tgl_tanam) as tgl_tanam, MAX(kecamatan.kecamatan) as nama_kecamatan, MAX(desa.desa) as nama_desa, MAX(user.username) as penyuluh', false);
+        $this->db->from('tanam');
+        $this->db->join('kecamatan', 'kecamatan.id = tanam.kecamatan_id', 'left');
+        $this->db->join('desa', 'desa.id = tanam.desa_id', 'left');
+        $this->db->join('user', 'user.id = tanam.user_id', 'left');
+        $this->db->where('user_id', $user_id);
+        $this->db->group_by('batch_id');
+        $this->db->order_by('tgl_tanam', 'DESC');
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     // Untuk modal
     public function getDetailByBatch($batch_id) {
         $this->db->select('

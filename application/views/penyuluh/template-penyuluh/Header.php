@@ -15,7 +15,11 @@
         content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard" />
     <!--end::Primary Meta Tags-->
 
-    <link rel="icon" href="assets/Foto/logo.png" type="image/x-icon">
+    <link rel="icon" href="<?= base_url('assets/Foto/logo.png') ?>" type="image/x-icon">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -89,6 +93,15 @@
     .dataTables_paginate .disabled {
         color: #ccc;
     }
+
+    .modal-backdrop.blur {
+        backdrop-filter: blur(5px);
+        /* Sesuaikan nilai blur sesuai kebutuhan */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Sesuaikan opasitas latar belakang */
+    }
     </style>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>

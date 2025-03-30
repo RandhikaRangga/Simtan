@@ -57,9 +57,9 @@
             <!--begin::Sidebar Brand-->
             <div class="sidebar-brand">
                 <!--begin::Brand Link-->
-                <a href="Dashboard" class="brand-link">
+                <a href="<?= site_url('PetugasKantor') ?>" class="brand-link">
                     <!--begin::Brand Image-->
-                    <img src="assets/Foto/logo.png" alt="Logo" class="brand-image opacity-75 shadow"
+                    <img src="<?= site_url('assets/Foto/logo.png') ?>" alt="Logo" class="brand-image opacity-75 shadow"
                         style="margin-right: 10px;" />
                     <!--end::Brand Image-->
                     <!--begin::Brand Text-->
@@ -83,7 +83,7 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="Penyuluh" class="nav-link">
+                            <a href="<?= site_url('PetugasKantor') ?>" class="nav-link">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -93,96 +93,36 @@
                         <li class="nav-header">PERTANIAN</li>
 
                         <li class="nav-item">
-                            <a href="Penyuluh-DataLahan" class="nav-link">
-                                <i class="nav-icon fa-solid fa-map"></i>
-                                <p>Data Lahan</p>
+                            <a href="<?= site_url('PetugasKantor-LaporanTanam') ?>" class="nav-link">
+                                <i class="nav-icon fa-solid fa-clipboard-list"></i>
+                                <p>Laporan Tanam</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="Penyuluh-DataTanam" class="nav-link">
-                                <i class="nav-icon fa-solid fa-seedling"></i>
-                                <p>Data Tanam</p>
+                            <a href="<?= site_url('PetugasKantor-LaporanPanen') ?>" class="nav-link">
+                                <i class="nav-icon fa-solid fa-clipboard-list"></i>
+                                <p>Laporan Panen</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="Penyuluh-DataPanen" class="nav-link">
-                                <i class="nav-icon fa-solid fa-tractor"></i>
-                                <p>Data Panen</p>
+                            <a href="<?= site_url('PetugasKantor-LaporanProduksi') ?>" class="nav-link">
+                                <i class="nav-icon fa-solid fa-clipboard-list"></i>
+                                <p>Laporan Produksi</p>
                             </a>
                         </li>
+                        <!-- DATA PERTANIAN END -->
 
+                        <!-- DATA Wilayah -->
                         <li class="nav-item">
-                            <a href="Penyuluh-DataPenyakit" class="nav-link">
-                                <i class="nav-icon fa-solid fa-virus"></i>
-                                <p>Data Penyakit Tanaman</p>
+                            <a href="<?= site_url('PetugasKantor-Map') ?>" class="nav-link">
+                                <i class="nav-icon fa-solid fa-map-location-dot"></i>
+                                <p>Map Lahan</p>
                             </a>
                         </li>
-
-                        <!-- DATA PETERNAKAN -->
-                        <li class="nav-header">PERTERNAKAN</li>
-
-                        <li class="nav-item">
-                            <a href="../generate/theme.html" class="nav-link">
-                                <i class="nav-icon fa-solid fa-map"></i>
-                                <p>Data Peternakan</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="../generate/theme.html" class="nav-link">
-                                <i class="nav-icon fa-solid fa-seedling"></i>
-                                <p>Data Tanam</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="../generate/theme.html" class="nav-link">
-                                <i class="nav-icon fa-solid fa-tractor"></i>
-                                <p>Data Panen</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="../generate/theme.html" class="nav-link">
-                                <i class="nav-icon fa-solid fa-virus"></i>
-                                <p>Data Penyakit Tanaman</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-header">EXAMPLES</li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>
-                                    Tanam
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="../index.html" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Data Tanam</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../index2.html" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Input Data</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../index3.html" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Edit Data</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
+                        <!-- DATA WILAYAH END -->
+                    </ul>
                 </nav>
             </div>
             <!--end::Sidebar Wrapper-->

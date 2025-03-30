@@ -1,12 +1,12 @@
 <!--begin::Row-->
 <div class="row">
     <div class="col-sm-6">
-        <h3 class="mb-0">Tabel Produksi Kabupaten Tegal</h3>
+        <h3 class="mb-0">Tabel Panen Kabupaten Tegal</h3>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
-            <li class="breadcrumb-item"><a href="Admin">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tabel Produksi</li>
+            <li class="breadcrumb-item"><a href="Penyuluh">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tabel Panen</li>
         </ol>
     </div>
 </div>
@@ -20,7 +20,7 @@
         <div class="card">
             <div class="card-body">
                 <!-- Filter -->
-                <form method="GET" action="<?= base_url('produksi/view_admin') ?>" class="mb-3">
+                <form method="GET" action="<?= base_url('panen/view_penyuluh') ?>" class="mb-3">
                     <div class="row align-items-end">
                         <div class="col-md-2">
                             <label for="bulan">Bulan:</label>
@@ -66,19 +66,6 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <label for="penyuluh">Penyuluh:</label>
-                            <select name="penyuluh" id="penyuluh" class="form-select">
-                                <option value="all" <?= ($selected_penyuluh == 'all') ? 'selected' : '' ?>>Semua
-                                    Penyuluh
-                                </option>
-                                <?php foreach ($penyuluh as $p) : ?>
-                                <option value="<?= $p->id ?>" <?= ($p->id == $selected_penyuluh) ? 'selected' : '' ?>>
-                                    <?= $p->nama ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
                         <div class="col-md-2 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary">Filter</button>
                         </div>
@@ -111,16 +98,16 @@
 
                 $total = 0;
                 for ($i = 1; $i <= date('t', strtotime("$tahun-$bulan-01")); $i++) {
-                    $berat_produksi = 0;
+                    $luas_panen = 0;
 
-                    foreach ($data_produksi as $dt) {
+                    foreach ($data_panen as $dt) {
                         if ($dt->komoditas == $k->komoditas && $dt->tanggal == $i) {
-                            $berat_produksi = $dt->berat_produksi;
-                            $total += $berat_produksi;
+                            $luas_panen = $dt->luas_panen;
+                            $total += $luas_panen;
                         }
                     }
 
-                    echo "<td>$berat_produksi</td>";
+                    echo "<td>$luas_panen</td>";
                 }
 
                 echo "<td><strong>$total</strong></td>";
@@ -133,42 +120,41 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- AJAX untuk Menampilkan Desa berdasarkan Kecamatan -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    function loadDesa(kecamatan_id) {
-        $.ajax({
-            url: "<?= base_url('produksi/get_desa_by_kecamatan') ?>",
-            type: "POST",
-            data: {
-                kecamatan_id: kecamatan_id
-            },
-            dataType: "json",
-            success: function(data) {
-                $("#desa").html('<option value="all">Semua Desa</option>');
+    <!-- AJAX untuk Menampilkan Desa berdasarkan Kecamatan -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        function loadDesa(kecamatan_id) {
+            $.ajax({
+                url: "<?= base_url('panen/get_desa_by_kecamatan') ?>",
+                type: "POST",
+                data: {
+                    kecamatan_id: kecamatan_id
+                },
+                dataType: "json",
+                success: function(data) {
+                    $("#desa").html('<option value="all">Semua Desa</option>');
 
-                $.each(data, function(index, desa) {
-                    var selected = (desa.id == selected_desa) ? 'selected' : '';
-                    $("#desa").append('<option value="' + desa.id + '" ' + selected +
-                        '>' +
-                        desa.desa + '</option>');
-                });
-            }
+                    $.each(data, function(index, desa) {
+                        var selected = (desa.id == selected_desa) ? 'selected' : '';
+                        $("#desa").append('<option value="' + desa.id + '" ' + selected +
+                            '>' +
+                            desa.desa + '</option>');
+                    });
+                }
+            });
+        }
+
+        // Saat kecamatan diubah
+        $("#kecamatan").change(function() {
+            var kecamatan_id = $(this).val();
+            loadDesa(kecamatan_id);
         });
-    }
 
-    // Saat kecamatan diubah
-    $("#kecamatan").change(function() {
-        var kecamatan_id = $(this).val();
-        loadDesa(kecamatan_id);
+        // Load desa berdasarkan kecamatan yang sudah dipilih sebelumnya
+        var selected_kecamatan = $("#kecamatan").val();
+        var selected_desa = "<?= $selected_desa ?>";
+        loadDesa(selected_kecamatan);
     });
-
-    // Load desa berdasarkan kecamatan yang sudah dipilih sebelumnya
-    var selected_kecamatan = $("#kecamatan").val();
-    var selected_desa = "<?= $selected_desa ?>";
-    loadDesa(selected_kecamatan);
-});
-</script>
+    </script>

@@ -5,7 +5,7 @@
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
-            <li class="breadcrumb-item"><a href="<?= base_url('admin'); ?>">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url('Penyuluh'); ?>">Dashboard</a></li>
             <li class="breadcrumb-item active">Tabel Tanam</li>
         </ol>
     </div>
@@ -16,7 +16,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <!-- Filter -->
-            <form method="GET" action="<?= base_url('tanam/view_admin') ?>" class="mb-3">
+            <form method="GET" action="<?= base_url('tanam/view_penyuluh') ?>" class="mb-3">
                 <div class="row align-items-end">
                     <div class="col-md-2">
                         <label for="bulan">Bulan:</label>
@@ -56,18 +56,6 @@
                             <?php foreach ($desa as $d) : ?>
                             <option value="<?= $d->id ?>" <?= ($d->id == $selected_desa) ? 'selected' : '' ?>>
                                 <?= $d->desa ?>
-                            </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="penyuluh">Penyuluh:</label>
-                        <select name="penyuluh" id="penyuluh" class="form-select">
-                            <option value="all" <?= ($selected_penyuluh == 'all') ? 'selected' : '' ?>>Semua Penyuluh
-                            </option>
-                            <?php foreach ($penyuluh as $p) : ?>
-                            <option value="<?= $p->id ?>" <?= ($p->id == $selected_penyuluh) ? 'selected' : '' ?>>
-                                <?= $p->username ?>
                             </option>
                             <?php endforeach; ?>
                         </select>

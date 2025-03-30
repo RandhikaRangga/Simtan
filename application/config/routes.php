@@ -62,8 +62,8 @@ $route['Admin-EditPengguna/(:num)'] = 'Pengguna/edit_pengguna/$1';
 $route['Admin-HapusPengguna/(:num)'] = 'Pengguna/hapus_pengguna/$1';
 
 $route['Admin-InputLaporan'] = 'InputLaporan/view_admin';
-$route['Admin-TambahLaporan'] = 'InputLaporan/tambah_laporan';
-$route['Admin-EditLaporan/(:num)'] = 'InputLaporan/edit_laporan/$1';
+$route['Admin-TambahLaporan'] = 'InputLaporan/tambah_laporan_admin';
+$route['Admin-EditLaporan/(:num)'] = 'InputLaporan/edit_laporan_admin/$1';
 $route['Admin-HapusLaporan/(:num)'] = 'InputLaporan/hapus_batch/$1';
 
 $route['Admin-Komoditas'] = 'Komoditas';
@@ -103,17 +103,21 @@ $route['Admin-HapusLahan/(:num)'] = 'Lahan/hapus_lahan/$1';
 
 $route['Admin-Map'] = 'Lahan/map_admin';
 
-// Routes Kepala Kantor
-$route['Kepala_Kantor'] = 'KepalaKantor';
-$route['KK-DataLahan'] = 'KepalaKantor/lahan';
-$route['KK-DataTanam'] = 'KepalaKantor/tanam';
-$route['KK-DataPanen'] = 'KepalaKantor/panen';
-$route['KK-DataPenyakit'] = 'KepalaKantor/penyakit';
-$route['KK-DataPenyuluh'] = 'KepalaKantor/penyuluh';
+// Routes Petugas Kantor
+$route['Petugas-Kantor'] = 'PetugasKantor';
 
 // Routes Penyuluh
-$route['Penyuluh'] = 'Penyuluh';
-$route['Penyuluh-DataLahan'] = 'Penyuluh/lahan';
-$route['Penyuluh-DataTanam'] = 'Penyuluh/tanam';
-$route['Penyuluh-DataPanen'] = 'Penyuluh/panen';
-$route['Penyuluh-DataPenyakit'] = 'Penyuluh/penyakit';
+$route['Penyuluh'] = 'Dashboard/view_penyuluh';
+
+$route['Penyuluh-InputLaporan'] = 'InputLaporan/view_penyuluh';
+$route['Penyuluh-TambahLaporan'] = 'InputLaporan/tambah_laporan_penyuluh';
+$route['Penyuluh-EditLaporan/(:num)'] = 'InputLaporan/edit_laporan_penyuluh/$1';
+$route['Penyuluh-HapusLaporan/(:num)'] = 'InputLaporan/hapus_batch/$1';
+
+$route['Penyuluh-Tanam'] = 'Tanam/view_penyuluh';
+
+$route['Penyuluh-Panen'] = 'Panen/view_penyuluh';
+
+$route['Penyuluh-Produksi'] = 'Produksi/view_penyuluh';
+
+$route['Penyuluh-Map'] = 'Lahan/map_penyuluh';

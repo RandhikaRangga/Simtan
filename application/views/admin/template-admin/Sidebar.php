@@ -191,6 +191,7 @@
                             </a>
                         </li>
                         <!-- DATA WILAYAH END -->
+                    </ul>
                 </nav>
             </div>
             <!--end::Sidebar Wrapper-->

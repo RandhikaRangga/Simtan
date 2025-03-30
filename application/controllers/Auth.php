@@ -91,4 +91,9 @@ class Auth extends CI_Controller {
         $this->session->sess_destroy();
         redirect('auth');
     }
+
+    public function forbidden() {
+        echo "<h2>Akses Ditolak</h2><p>Anda tidak memiliki izin untuk mengakses halaman ini.</p>";
+    }
+    
 }

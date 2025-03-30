@@ -13,6 +13,12 @@ class Tanam extends CI_Controller {
         }
     }
     public function view_admin() {
+        $role = $this->session->userdata('role');
+
+		if ($role !== 'admin') {
+			redirect('auth/forbidden');
+		}
+
         // Ambil filter dari input GET
         $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');
         $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
@@ -52,6 +58,48 @@ class Tanam extends CI_Controller {
         $this->load->view('admin/template-admin/sidebar', $data);
         $this->load->view('admin/tanam', $data);
         $this->load->view('admin/template-admin/footer');
+    }
+
+    public function view_penyuluh() {
+        $role = $this->session->userdata('role');
+
+		if ($role !== 'penyuluh') {
+			redirect('auth/forbidden');
+		}
+
+        // Ambil filter dari input GET
+        $bulan = $this->input->get('bulan') ? $this->input->get('bulan') : date('m');
+        $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
+        $kecamatan = $this->input->get('kecamatan') ? $this->input->get('kecamatan') : 'all';
+        $desa = $this->input->get('desa') ? $this->input->get('desa') : 'all';
+    
+        // Ambil daftar kecamatan dan desa
+        $kecamatan_list = $this->Tanam_model->get_kecamatan();
+        $desa_list = ($kecamatan != 'all') ? $this->db->get_where('desa', ['kecamatan_id' => $kecamatan])->result() : [];
+    
+        // Ambil daftar komoditas
+        $komoditas = $this->Tanam_model->get_komoditas();
+    
+        // Ambil data tanam berdasarkan filter
+        $data_tanam = $this->Tanam_model->get_data_tanam($bulan, $tahun, $kecamatan, $desa);
+    
+        // Kirim data ke view
+        $data = [
+            'komoditas' => $komoditas,
+            'data_tanam' => $data_tanam,
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'kecamatan' => $kecamatan_list,
+            'desa' => $desa_list,
+            'selected_kecamatan' => $kecamatan,
+            'selected_desa' => $desa,
+        ];
+        $data['username'] = $this->session->userdata('username');
+    
+        $this->load->view('penyuluh/template-penyuluh/header');
+        $this->load->view('penyuluh/template-penyuluh/sidebar', $data);
+        $this->load->view('penyuluh/tanam', $data);
+        $this->load->view('penyuluh/template-penyuluh/footer');
     }
 
     public function get_desa_by_kecamatan() {
