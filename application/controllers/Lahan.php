@@ -181,11 +181,16 @@ class Lahan extends CI_Controller {
 		$this->load->view('petugas_kantor/template-pk/footer');
 	}
 
+	// public function getPoligon() {
+	// 	$data = $this->Lahan_model->get_lahan();
+	// 	header('Content-Type: application/json');
+	// 	echo json_encode($data);
+	// }
+
 	public function getPoligon() {
-		$data = $this->Lahan_model->get_lahan();
-		header('Content-Type: application/json');
-		echo json_encode($data);
+		$this->Lahan_model->get_lahan(); // Ini otomatis echo json-nya langsung
 	}
+	
 
 	public function getTotalProduksi($kecamatan_id){
         $data = $this->Lahan_model->getTotalProduksi($kecamatan_id);

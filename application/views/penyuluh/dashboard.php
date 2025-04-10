@@ -44,9 +44,9 @@
                                         <tr>
                                             <td><?= $no++; ?></td>
                                             <td><?= $row['komoditas'] ?></td>
-                                            <td><?= $row['total_tanam'] ?></td>
-                                            <td><?= $row['total_panen'] ?></td>
-                                            <td><?= $row['total_produksi'] ?></td>
+                                            <td><?= format_number($row['total_tanam']) ?></td>
+                                            <td><?= format_number($row['total_panen']) ?></td>
+                                            <td><?= format_number($row['total_produksi']) ?></td>
                                         </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -77,9 +77,9 @@
                                         <tr>
                                             <td><?= $no++; ?></td>
                                             <td><?= $row['komoditas'] ?></td>
-                                            <td><?= $row['total_tanam'] ?></td>
-                                            <td><?= $row['total_panen'] ?></td>
-                                            <td><?= $row['total_produksi'] ?></td>
+                                            <td><?= format_number($row['total_tanam']) ?></td>
+                                            <td><?= format_number($row['total_panen']) ?></td>
+                                            <td><?= format_number($row['total_produksi']) ?></td>
                                         </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -112,9 +112,9 @@
                                         <tr>
                                             <td><?= $no++; ?></td>
                                             <td><?= $row['komoditas'] ?></td>
-                                            <td><?= $row['total_tanam'] ?></td>
-                                            <td><?= $row['total_panen'] ?></td>
-                                            <td><?= $row['total_produksi'] ?></td>
+                                            <td><?= format_number($row['total_tanam']) ?></td>
+                                            <td><?= format_number($row['total_panen']) ?></td>
+                                            <td><?= format_number($row['total_produksi']) ?></td>
                                         </tr>
                                         <?php endforeach; ?>
                                     </tbody>

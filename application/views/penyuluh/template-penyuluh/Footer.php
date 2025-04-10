@@ -1,17 +1,18 @@
 <footer class="app-footer">
     <!--begin::To the end-->
-    <div class="float-end d-none d-sm-inline">Anything you want</div>
     <!--end::To the end-->
     <!--begin::Copyright-->
     <strong>
-        Copyright &copy; 2014-2024&nbsp;
-        <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
+        <p>&copy; <span id="year"></span> Sistem Informasi Pertanian Kabupaten Tegal.</p>
     </strong>
-    All rights reserved.
     <!--end::Copyright-->
 </footer>
 <!--end::Footer-->
 </div>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

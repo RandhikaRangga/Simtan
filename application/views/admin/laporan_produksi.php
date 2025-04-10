@@ -166,10 +166,10 @@
                                     $total += $berat_produksi;
                                 }
                             }
-                            echo "<td>$berat_produksi</td>";
+                            echo "<td>" . format_number($berat_produksi) . "</td>";
                         }
 
-                        echo "<td><strong>$total</strong></td>";
+                        echo "<td><strong>" . format_number($total) . "</strong></td>";
                         echo "</tr>";
                         $no++;
                     }

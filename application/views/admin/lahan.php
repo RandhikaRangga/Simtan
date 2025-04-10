@@ -156,6 +156,11 @@ $(document).ready(function() {
 
                     console.log("Data koordinat dari server:", response.koordinat);
 
+                    $('.modal-backdrop').addClass('blur');
+
+                    $('#modalDetail').on('hidden.bs.modal', function() {
+                        $('.modal-backdrop').removeClass('blur');
+                    });
                     // Tampilkan modal
                     $('#modalDetail').modal('show');
 

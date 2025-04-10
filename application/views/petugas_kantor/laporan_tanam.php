@@ -166,10 +166,10 @@
                                     $total += $luas_tanam;
                                 }
                             }
-                            echo "<td>$luas_tanam</td>";
+                            echo "<td>" . format_number($luas_tanam) . "</td>";
                         }
 
-                        echo "<td><strong>$total</strong></td>";
+                        echo "<td><strong>" . format_number($total) . "</strong></td>";
                         echo "</tr>";
                         $no++;
                     }

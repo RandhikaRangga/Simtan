@@ -29,6 +29,7 @@ class InputLaporan extends CI_Controller {
 		$this->load->model('Laporan_model');
 		$this->load->model('Kecamatan_model');
 		$this->load->model('Desa_model');
+		$this->load->helper(['url', 'form']);
 
         if (!$this->session->userdata('logged_in')) {
             redirect('auth');
@@ -138,6 +139,29 @@ class InputLaporan extends CI_Controller {
 			$tanam = $this->input->post('tanam_' . $komoditas->id);
 			$panen = $this->input->post('panen_' . $komoditas->id);
 			$produksi = $this->input->post('produksi_' . $komoditas->id);
+
+			$errors = [];
+
+			if (!empty($tanam) && !preg_match('/^[0-9.,]+$/', $tanam)) {
+				$errors[] = 'Input luas tanam tidak valid!';
+			}
+			if (!empty($panen) && !preg_match('/^[0-9.,]+$/', $panen)) {
+				$errors[] = 'Input luas panen tidak valid!';
+			}
+			if (!empty($produksi) && !preg_match('/^[0-9.,]+$/', $produksi)) {
+				$errors[] = 'Input berat produksi tidak valid!';
+			}
+
+			if (!empty($errors)) {
+				$this->session->set_flashdata('error_tambah', implode('<br>', $errors));
+				redirect(!empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : base_url('halaman-fallback'));
+				return;
+			}
+			
+			// Konversi angka ke format yang benar untuk database
+			$tanam = !empty($tanam) ? str_replace(',', '.', str_replace('.', '', $tanam)) : null;
+			$panen = !empty($panen) ? str_replace(',', '.', str_replace('.', '', $panen)) : null;
+			$produksi = !empty($produksi) ? str_replace(',', '.', str_replace('.', '', $produksi)) : null;
 	
 			if (!empty($tanam)) {
 				$data_tanam[] = [

@@ -38,7 +38,7 @@
                 <div class="col-md-6">
                     <form method="POST" action="">
                         <label>Nama Lahan:</label>
-                        <input type="text" name="lahan" class="form-control"><br>
+                        <input type="text" name="lahan" class="form-control" required><br>
 
                         <label>Kecamatan:</label>
                         <select name="kecamatan_id" id="kecamatan" class="form-control" required>
@@ -54,13 +54,13 @@
                         </select><br>
 
                         <label>Luas:</label>
-                        <input type="text" name="luas" class="form-control"><br>
+                        <input type="text" name="luas" class="form-control" required><br>
 
                         <label>Irigasi:</label>
-                        <input type="text" name="irigasi" class="form-control"><br>
+                        <input type="text" name="irigasi" class="form-control" required><br>
 
                         <label>Kondisi:</label>
-                        <select name="kondisi" class="form-control">
+                        <select name="kondisi" class="form-control" required>
                             <option value="">-- Pilih Kondisi --</option>
                             <option value="Baik">Baik</option>
                             <option value="Buruk">Buruk</option>

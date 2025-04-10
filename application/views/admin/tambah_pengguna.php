@@ -30,19 +30,19 @@
                 <div class="row mb-3">
                     <label for="inputNamal3" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="nama" id="inputNama3" />
+                        <input type="text" class="form-control" name="nama" id="inputNama3" required />
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputUsernamel3" class="col-sm-2 col-form-label">Username</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="username" id="inputUsername3" />
+                        <input type="text" class="form-control" name="username" id="inputUsername3" required />
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputPasswordl3" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="password" id="inputPassword3" />
+                        <input type="text" class="form-control" name="password" id="inputPassword3" required />
                     </div>
                 </div>
                 <div class="row mb-3">

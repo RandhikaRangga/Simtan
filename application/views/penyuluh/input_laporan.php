@@ -174,15 +174,9 @@ $(document).ready(function() {
                         var row = "<tr>" +
                             "<td>" + (index + 1) + "</td>" +
                             "<td>" + item.komoditas + "</td>" +
-                            "<td>" + (item.luas_tanam ? item
-                                .luas_tanam : '-') +
-                            "</td>" +
-                            "<td>" + (item.luas_panen ? item
-                                .luas_panen : '-') +
-                            "</td>" +
-                            "<td>" + (item.berat_produksi ? item
-                                .berat_produksi :
-                                '-') + "</td>" +
+                            "<td>" + formatNumber(item.luas_tanam) + "</td>" +
+                            "<td>" + formatNumber(item.luas_panen) + "</td>" +
+                            "<td>" + formatNumber(item.berat_produksi) + "</td>" +
                             "</tr>";
                         tableBody.append(row);
 
@@ -244,4 +238,12 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+function formatNumber(num) {
+    if (!num || isNaN(num)) return '-';
+    return new Intl.NumberFormat('id-ID', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    }).format(num);
+}
 </script>

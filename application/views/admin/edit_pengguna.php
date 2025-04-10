@@ -45,7 +45,7 @@
                     <label for="inputPasswordl3" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="password" class="form-control" name="Password" id="inputPassword3"
+                            <input type="password" class="form-control" name="password" id="inputPassword3"
                                 value="<?= $record->password; ?>" />
                             <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
                                 <i id="eyeIcon" class="fas fa-eye-slash"></i>

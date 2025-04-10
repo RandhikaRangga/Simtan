@@ -176,10 +176,10 @@
                                             }
                                         }
 
-                                        echo "<td>$luas_panen</td>";
+                                        echo "<td>" . format_number($luas_panen) . "</td>";
                                     }
 
-                                    echo "<td><strong>$total</strong></td>";
+                                    echo "<td><strong>" . format_number($total) . "</strong></td>";
                                     echo "</tr>";
                                     $no++;
                                 }

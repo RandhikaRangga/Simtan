@@ -10,6 +10,7 @@ class Dashboard extends CI_Controller {
         $this->load->model('Panen_model');
         $this->load->model('Produksi_model');
         $this->load->model('Komoditas_model');
+        $this->load->helper(['url', 'form', 'my_helper']);
 
         if (!$this->session->userdata('logged_in')) {
             redirect('auth');

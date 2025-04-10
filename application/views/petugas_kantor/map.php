@@ -63,39 +63,37 @@ function getColor(kondisi) {
         "green"; // Default warna jika tidak ada kondisi yang cocok
 }
 
-$.getJSON("<?= base_url('lahan/getPoligon') ?>", function(data) {
-    data.forEach(function(lahan) {
-        var geojson = lahan.geojson;
-        L.geoJSON(geojson, {
-            style: function(feature) {
-                return {
-                    color: 'black', // Warna garis tepi
-                    weight: 1,
-                    opacity: 0.7,
-                    fillColor: getColor(lahan.kondisi), // Warna berdasarkan kondisi
-                    fillOpacity: 0.7
-                };
-            },
-            onEachFeature: function(feature, layer) {
-                // Event saat poligon diklik
+$.getJSON("<?= base_url('lahan/getPoligon') ?>", function(geojsonData) {
+    console.log(geojsonData); // pastikan terlihat FeatureCollection di console
+    L.geoJSON(geojsonData, {
+        style: function(feature) {
+            return {
+                color: 'black',
+                weight: 1,
+                opacity: 0.7,
+                fillColor: getColor(feature.properties.kondisi),
+                fillOpacity: 0.7
+            };
+        },
+        onEachFeature: function(feature, layer) {
+            // Buat closure untuk mengakses properti fitur saat ini
+            (function(featureProps) {
                 layer.on('click', function() {
-                    // Tampilkan informasi di card
-                    $("#info-lahan").text(lahan.lahan);
-                    $("#info-kecamatan").text(lahan.kecamatan);
-                    $("#info-desa").text(lahan.desa);
-                    $("#info-luas").text(lahan.luas);
-                    $("#info-irigasi").text(lahan.irigasi);
-                    $("#info-kondisi").text(lahan.kondisi);
+                    $("#info-lahan").text(featureProps.lahan);
+                    $("#info-kecamatan").text(featureProps.kecamatan);
+                    $("#info-desa").text(featureProps.desa);
+                    $("#info-luas").text(featureProps.luas);
+                    $("#info-irigasi").text(featureProps.irigasi);
+                    $("#info-kondisi").text(featureProps.kondisi);
 
-                    loadTotalProduksi(lahan.kecamatan_id);
+                    loadTotalProduksi(featureProps.kecamatan_id);
 
-                    // Tampilkan card informasi
                     $("#info-column").removeClass("d-none");
                     $("#map-column").removeClass("col-md-12").addClass("col-md-8");
                 });
-            }
-        }).addTo(map);
-    });
+            })(feature.properties); // Segera panggil fungsi dengan feature.properties saat ini
+        }
+    }).addTo(map);
 });
 
 function loadTotalProduksi(kecamatan_id) {
@@ -107,9 +105,13 @@ function loadTotalProduksi(kecamatan_id) {
 
             // Pastikan data tidak undefined
             if (data) {
-                $('#info-total-tanam').text((data.total_tanam || 0) + " ha");
-                $('#info-total-panen').text((data.total_panen || 0) + " ha");
-                $('#info-total-produksi').text((data.total_produksi || 0) + " ton");
+                function formatNumber(num) {
+                    return Number.isInteger(num) ? num : parseFloat(num).toFixed(2).replace(/\.?0+$/, '');
+                }
+
+                $('#info-total-tanam').text(formatNumber(data.total_tanam || 0) + " ha");
+                $('#info-total-panen').text(formatNumber(data.total_panen || 0) + " ha");
+                $('#info-total-produksi').text(formatNumber(data.total_produksi || 0) + " ton");
             } else {
                 console.log("Data kosong atau format tidak sesuai");
             }

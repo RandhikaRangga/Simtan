@@ -31,7 +31,7 @@ class LaporanTanam  extends CI_Controller {
         parent::__construct();
 		$this->load->model('User_model');
 		$this->load->model('Tanam_model');
-        $this->load->database();
+        $this->load->helper(['url', 'form', 'my_helper']);
 
         if (!$this->session->userdata('logged_in')) {
             redirect('auth');

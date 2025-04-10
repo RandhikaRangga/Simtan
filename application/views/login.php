@@ -56,7 +56,6 @@
             </div>
 
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
 
                 <!-- Flash Message Error -->
                 <?php if ($this->session->flashdata('error')): ?>
