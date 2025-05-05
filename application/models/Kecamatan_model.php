@@ -9,7 +9,7 @@ class Kecamatan_model extends CI_Model {
 
     // View
     public function get_all_data() {
-        return $this->db->get('kecamatan')->result();
+        return $this->db->order_by('update_at', 'DESC')->get('kecamatan')->result();
     }
 
     // Tambah data

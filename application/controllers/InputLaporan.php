@@ -88,10 +88,12 @@ class InputLaporan extends CI_Controller {
 
 	public function tambah_laporan_admin() {
 		$this->check_role('admin');
+		$this->load->helper('form');
 
 		$data['username'] = $this->session->userdata('username');
 		$data['komoditas'] = $this->Komoditas_model->get_all_data();
 		$data['kecamatan'] = $this->db->get('kecamatan')->result();
+		$data['old_input'] = $this->session->flashdata('old_input');
 		
 		$this->load->view('admin/template-admin/header');
 		$this->load->view('admin/template-admin/sidebar', $data);
@@ -154,9 +156,11 @@ class InputLaporan extends CI_Controller {
 
 			if (!empty($errors)) {
 				$this->session->set_flashdata('error_tambah', implode('<br>', $errors));
+				$this->session->set_flashdata('old_input', $this->input->post());
 				redirect(!empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : base_url('halaman-fallback'));
 				return;
 			}
+			
 			
 			// Konversi angka ke format yang benar untuk database
 			$tanam = !empty($tanam) ? str_replace(',', '.', str_replace('.', '', $tanam)) : null;

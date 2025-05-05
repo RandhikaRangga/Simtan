@@ -9,7 +9,7 @@ class Komoditas_model extends CI_Model {
 
     // View
     public function get_all_data() {
-        return $this->db->get('komoditas')->result();
+        return $this->db->order_by('update_at', 'DESC')->get('komoditas')->result();
     }
 
     // Tambah data

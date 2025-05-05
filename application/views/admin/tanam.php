@@ -67,7 +67,7 @@
                             </option>
                             <?php foreach ($penyuluh as $p) : ?>
                             <option value="<?= $p->id ?>" <?= ($p->id == $selected_penyuluh) ? 'selected' : '' ?>>
-                                <?= $p->username ?>
+                                <?= $p->nama ?>
                             </option>
                             <?php endforeach; ?>
                         </select>

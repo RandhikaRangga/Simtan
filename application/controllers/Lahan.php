@@ -70,37 +70,96 @@ class Lahan extends CI_Controller {
 	
 
     // Insert
+	// public function tambah_lahan() {
+	// 	$this->check_role('admin');
+
+    //     $data['username'] = $this->session->userdata('username');
+    //     $data['kecamatan'] = $this->Lahan_model->get_kecamatan();
+    //     $data['desa'] = $this->Lahan_model->get_desa();
+
+    //     if ($this->input->post()) {
+	// 		$koordinat = $this->input->post('koordinat');
+	// 		$errors = [];
+
+	// 		// Validasi koordinat hanya boleh berisi angka, koma, titik, dan minus
+	// 		if (!preg_match('/^[\[\]\{\}\"0-9.,:\-\s]+$/', $koordinat)) {
+	// 			$errors[] = 'Input koordinat tidak valid! Hanya boleh mengandung angka, koma, titik, tanda kutip, kurung, minus, dan spasi.';
+	// 		}
+
+	// 		if (empty($errors)){
+	// 			$insert_data = [
+	// 				'kecamatan_id' => $this->input->post('kecamatan_id'),
+	// 				'desa_id' => $this->input->post('desa_id'),
+	// 				'lahan' => $this->input->post('lahan'),
+	// 				'luas' => $this->input->post('luas'),
+	// 				'koordinat' => $this->input->post('koordinat'), // Data GeoJSON
+	// 				'irigasi' => $this->input->post('irigasi'),
+	// 				'kondisi' => $this->input->post('kondisi')
+	// 			];
+
+	// 			if ($this->Lahan_model->insert_data($insert_data)) {
+	// 				$this->session->set_flashdata('success_tambah', 'Data Lahan Berhasil Ditambahkan');
+	// 			} else {
+	// 				$this->session->set_flashdata('error_tambah', 'Data Gagal Ditambahkan');
+	// 			}
+	// 			redirect('Admin-Lahan');
+	// 		} else {
+	// 			$data['errors'] = $errors;
+	// 		}
+    //     }
+
+    //     $this->load->view('admin/template-admin/header');
+    //     $this->load->view('admin/template-admin/sidebar', $data);
+    //     $this->load->view('admin/tambah_lahan', isset($data) ? $data : []);
+    //     $this->load->view('admin/template-admin/footer');
+    // }
 	public function tambah_lahan() {
 		$this->check_role('admin');
-
-        $data['username'] = $this->session->userdata('username');
-        $data['kecamatan'] = $this->Lahan_model->get_kecamatan();
-        $data['desa'] = $this->Lahan_model->get_desa();
-
-        if ($this->input->post()) {
-            $insert_data = [
-                'kecamatan_id' => $this->input->post('kecamatan_id'),
-                'desa_id' => $this->input->post('desa_id'),
-                'lahan' => $this->input->post('lahan'),
-                'luas' => $this->input->post('luas'),
-                'koordinat' => $this->input->post('koordinat'), // Data GeoJSON
-                'irigasi' => $this->input->post('irigasi'),
-                'kondisi' => $this->input->post('kondisi')
-            ];
-
-            if ($this->Lahan_model->insert_data($insert_data)) {
-                $this->session->set_flashdata('success_tambah', 'Data Lahan Berhasil Ditambahkan');
-            } else {
-                $this->session->set_flashdata('error_tambah', 'Data Gagal Ditambahkan');
-            }
-            redirect('Admin-Lahan');
-        }
-
-        $this->load->view('admin/template-admin/header');
-        $this->load->view('admin/template-admin/sidebar', $data);
-        $this->load->view('admin/tambah_lahan');
-        $this->load->view('admin/template-admin/footer');
-    }
+		$this->load->helper('form');
+	
+		$data['username'] = $this->session->userdata('username');
+		$data['kecamatan'] = $this->Lahan_model->get_kecamatan();
+		$data['desa'] = $this->Lahan_model->get_desa();
+	
+		if ($this->input->post()) {
+			$koordinat = $this->input->post('koordinat');
+			$errors = [];
+	
+			// Validasi koordinat hanya boleh berisi angka, koma, titik, dan minus
+			if (!preg_match('/^[\[\]\{\}\"0-9.,:\-\s]+$/', $koordinat)) {
+				$errors[] = 'Input koordinat tidak valid! Hanya boleh mengandung angka, koma, titik, tanda kutip, kurung, minus, dan spasi.';
+			}
+	
+			if (empty($errors)) {
+				$insert_data = [
+					'kecamatan_id' => $this->input->post('kecamatan_id'),
+					'desa_id' => $this->input->post('desa_id'),
+					'lahan' => $this->input->post('lahan'),
+					'luas' => $this->input->post('luas'),
+					'koordinat' => $this->input->post('koordinat'), // Data GeoJSON
+					'irigasi' => $this->input->post('irigasi'),
+					'kondisi' => $this->input->post('kondisi')
+				];
+	
+				if ($this->Lahan_model->insert_data($insert_data)) {
+					$this->session->set_flashdata('success_tambah', 'Data Lahan Berhasil Ditambahkan');
+				} else {
+					$this->session->set_flashdata('error_tambah', 'Data Gagal Ditambahkan');
+				}
+				redirect('Admin-Lahan');
+			} else {
+				$data['errors'] = $errors;
+				// Menambahkan input data yang sudah dimasukkan agar tetap muncul setelah error
+				$data['old_data'] = $this->input->post();
+			}
+		}
+	
+		$this->load->view('admin/template-admin/header');
+		$this->load->view('admin/template-admin/sidebar', $data);
+		$this->load->view('admin/tambah_lahan', isset($data) ? $data : []);
+		$this->load->view('admin/template-admin/footer');
+	}
+	
 
     // Edit
 	public function edit_lahan($id) {
@@ -112,21 +171,35 @@ class Lahan extends CI_Controller {
 		$data['desa'] = $this->Lahan_model->get_desa();
 
 		if ($this->input->post()) {
-			$update_data = [
-				'kecamatan_id' => $this->input->post('kecamatan_id'),
-                'desa_id' => $this->input->post('desa_id'),
-                'lahan' => $this->input->post('lahan'),
-                'luas' => $this->input->post('luas'),
-                'koordinat' => $this->input->post('koordinat'),
-                'irigasi' => $this->input->post('irigasi'),
-                'kondisi' => $this->input->post('kondisi')
-			];
-			if ($this->Lahan_model->update_data($id, $update_data)) {
-				$this->session->set_flashdata('success_edit','Data Desa Berhasil Diubah');
-			} else {
-				$this->session->set_flashdata('error_tambah','Data Gagal Ditambahkan');
+			$koordinat = $this->input->post('koordinat');
+			$errors = [];
+	
+			// Validasi koordinat hanya boleh berisi angka, koma, titik, dan minus
+			if (!preg_match('/^[\[\]\{\}\"0-9.,:\-\s]+$/', $koordinat)) {
+				$errors[] = 'Input koordinat tidak valid! Hanya boleh mengandung angka, koma, titik, tanda kutip, kurung, minus, dan spasi.';
 			}
-			redirect('Admin-Lahan');
+
+			if (empty($errors)) {
+				$update_data = [
+					'kecamatan_id' => $this->input->post('kecamatan_id'),
+					'desa_id' => $this->input->post('desa_id'),
+					'lahan' => $this->input->post('lahan'),
+					'luas' => $this->input->post('luas'),
+					'koordinat' => $this->input->post('koordinat'),
+					'irigasi' => $this->input->post('irigasi'),
+					'kondisi' => $this->input->post('kondisi')
+				];
+				if ($this->Lahan_model->update_data($id, $update_data)) {
+					$this->session->set_flashdata('success_edit','Data Lahan Berhasil Diubah');
+				} else {
+					$this->session->set_flashdata('error_tambah','Data Gagal Ditambahkan');
+				}
+				redirect('Admin-Lahan');
+			} else {
+				$data['errors'] = $errors;
+				// Menambahkan input data yang sudah dimasukkan agar tetap muncul setelah error
+				$data['old_data'] = $this->input->post();
+			}
 		}
 
 		$this->load->view('admin/template-admin/header');
@@ -140,7 +213,7 @@ class Lahan extends CI_Controller {
 		$this->check_role('admin');
 		
 		if ($this->Lahan_model->delete_data($id)) {
-			$this->session->set_flashdata('success','Data Desa Berhasil Dihapus');
+			$this->session->set_flashdata('success','Data Lahan Berhasil Dihapus');
 		} else {
 			$this->session->set_flashdata('error','Data Gagal Dihapus');
 		}	
@@ -180,12 +253,6 @@ class Lahan extends CI_Controller {
 		$this->load->view('petugas_kantor/map');
 		$this->load->view('petugas_kantor/template-pk/footer');
 	}
-
-	// public function getPoligon() {
-	// 	$data = $this->Lahan_model->get_lahan();
-	// 	header('Content-Type: application/json');
-	// 	echo json_encode($data);
-	// }
 
 	public function getPoligon() {
 		$this->Lahan_model->get_lahan(); // Ini otomatis echo json-nya langsung

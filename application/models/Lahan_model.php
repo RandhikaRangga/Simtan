@@ -133,6 +133,7 @@ class Lahan_model extends CI_Model {
         $this->db->from('lahan');
         $this->db->join('kecamatan', 'lahan.kecamatan_id = kecamatan.id', 'left');
         $this->db->join('desa', 'lahan.desa_id = desa.id', 'left');
+        $this->db->order_by('updated_at', 'DESC');
         return $this->db->get()->result();
     }
 
@@ -173,25 +174,6 @@ class Lahan_model extends CI_Model {
         $this->db->where('id', $id);
         return $this->db->delete('lahan');
     }
-
-    // Total Produksi
-    // public function getTotalProduksi($kecamatan_id){
-    //     $bulan_ini = date('Y-m'); // Format YYYY-MM
-
-    //     $query = $this->db->query("
-    //         SELECT 
-    //             COALESCE(SUM(t.luas), 0) AS total_tanam,
-    //             COALESCE(SUM(p.luas), 0) AS total_panen,
-    //             COALESCE(SUM(pr.berat), 0) AS total_produksi
-    //         FROM kecamatan k
-    //         LEFT JOIN tanam t ON t.kecamatan_id = k.id AND DATE_FORMAT(t.created_at, '%Y-%m') = '$bulan_ini'
-    //         LEFT JOIN panen p ON p.kecamatan_id = k.id AND DATE_FORMAT(p.created_at, '%Y-%m') = '$bulan_ini'
-    //         LEFT JOIN produksi pr ON pr.kecamatan_id = k.id AND DATE_FORMAT(pr.created_at, '%Y-%m') = '$bulan_ini'
-    //         WHERE k.id = ?
-    //     ", array($kecamatan_id)); // Pastikan kecamatan_id digunakan dengan parameter binding
-
-    //     return $query->row();
-    // }
 
     public function getTotalProduksi($kecamatan_id){
         $bulan_ini = date('Y-m'); // Format: 2025-04

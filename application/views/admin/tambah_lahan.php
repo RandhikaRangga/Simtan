@@ -36,38 +36,69 @@
             <div class="row">
                 <!-- Kolom Form -->
                 <div class="col-md-6">
+                    <?php if (!empty($errors)): ?>
+                    <div class="alert alert-danger">
+                        <?php foreach ($errors as $error): ?>
+                        <?= $error ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+
                     <form method="POST" action="">
                         <label>Nama Lahan:</label>
-                        <input type="text" name="lahan" class="form-control" required><br>
+                        <input type="text" name="lahan" class="form-control"
+                            value="<?= set_value('lahan', isset($old_data['lahan']) ? $old_data['lahan'] : '') ?>"
+                            required><br>
 
                         <label>Kecamatan:</label>
                         <select name="kecamatan_id" id="kecamatan" class="form-control" required>
                             <option value="">-- Pilih Kecamatan --</option>
                             <?php foreach ($kecamatan as $k): ?>
-                            <option value="<?= $k->id ?>"><?= $k->kecamatan ?></option>
+                            <option value="<?= $k->id ?>"
+                                <?= isset($old_data['kecamatan_id']) && $old_data['kecamatan_id'] == $k->id ? 'selected' : '' ?>>
+                                <?= $k->kecamatan ?>
+                            </option>
                             <?php endforeach; ?>
                         </select><br>
 
                         <label>Desa:</label>
                         <select name="desa_id" id="desa" class="form-control" required>
                             <option value="">-- Pilih Desa --</option>
+                            <!-- Desa akan terisi dengan JavaScript -->
                         </select><br>
 
                         <label>Luas:</label>
-                        <input type="text" name="luas" class="form-control" required><br>
+                        <input type="text" name="luas" class="form-control"
+                            value="<?= set_value('luas', isset($old_data['luas']) ? $old_data['luas'] : '') ?>"
+                            required><br>
 
                         <label>Irigasi:</label>
-                        <input type="text" name="irigasi" class="form-control" required><br>
+                        <input type="text" name="irigasi" class="form-control"
+                            value="<?= set_value('irigasi', isset($old_data['irigasi']) ? $old_data['irigasi'] : '') ?>"
+                            required><br>
 
                         <label>Kondisi:</label>
                         <select name="kondisi" class="form-control" required>
                             <option value="">-- Pilih Kondisi --</option>
-                            <option value="Baik">Baik</option>
-                            <option value="Buruk">Buruk</option>
+                            <option value="Baik"
+                                <?= isset($old_data['kondisi']) && $old_data['kondisi'] == 'Baik' ? 'selected' : '' ?>>
+                                Baik</option>
+                            <option value="Buruk"
+                                <?= isset($old_data['kondisi']) && $old_data['kondisi'] == 'Buruk' ? 'selected' : '' ?>>
+                                Buruk</option>
                         </select><br>
 
                         <label>Koordinat (Lat, Lng):</label>
-                        <textarea id="koordinat" name="koordinat" rows="4" class="form-control" required></textarea><br>
+                        <p>
+                            contoh : <br>
+                            -7.0333, 109.1667 <br>
+                            -7.0500, 109.1800 <br>
+                            -7.0600, 109.1600 <br>
+                            -7.0450, 109.1450 <br>
+                            -7.0333, 109.1667 <br>
+                        </p>
+                        <textarea id="koordinat" name="koordinat" rows="5" class="form-control"
+                            required><?= set_value('koordinat', isset($old_data['koordinat']) ? $old_data['koordinat'] : '') ?></textarea><br>
                 </div>
 
                 <!-- Kolom Peta -->

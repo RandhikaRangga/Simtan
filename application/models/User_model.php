@@ -16,7 +16,7 @@ class User_model extends CI_Model {
 
     // View
     public function get_all_data() {
-        return $this->db->get('user')->result();
+        return $this->db->order_by('updated_at', 'DESC')->get('user')->result();
     }
 
     // Tambah data

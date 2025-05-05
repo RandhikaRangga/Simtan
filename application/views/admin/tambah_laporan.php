@@ -29,7 +29,7 @@
                 <?php echo $this->session->flashdata('error_tambah'); ?>
             </div>
             <?php endif; ?>
-            <!--begin::Form-->
+            <!-- Form Tambah Data Laporan -->
             <form action="<?= base_url('inputlaporan/simpan_data') ?>" method="post">
                 <div class="card-body">
                     <div class="row">
@@ -40,17 +40,19 @@
                                 </div>
                                 <div class="card-body">
                                     <input type="hidden" name="batch_id"
-                                        value="<?= isset($batch_id) ? $batch_id : '' ?>">
+                                        value="<?= set_value('batch_id', isset($batch_id) ? $batch_id : '') ?>">
 
                                     <label>Tanggal:</label>
                                     <input type="date" name="tanggal" class="form-control"
-                                        value="<?= isset($tanam[0]->tanggal) ? $tanam[0]->tanggal : '' ?>" required><br>
+                                        value="<?= set_value('tanggal', isset($tanam[0]->tanggal) ? $tanam[0]->tanggal : '') ?>"
+                                        required><br>
 
                                     <label>Kecamatan:</label>
                                     <select name="kecamatan_id" id="kecamatan" class="form-control" required>
                                         <option value="">-- Pilih Kecamatan --</option>
                                         <?php foreach ($kecamatan as $k): ?>
-                                        <option value="<?= $k->id ?>"><?= $k->kecamatan ?></option>
+                                        <option value="<?= $k->id ?>" <?= set_select('kecamatan_id', $k->id) ?>>
+                                            <?= $k->kecamatan ?></option>
                                         <?php endforeach; ?>
                                     </select><br>
 
@@ -84,14 +86,14 @@
                                         <tr>
                                             <td><?= $no++ ?></td>
                                             <td><?= $k->komoditas ?></td>
-                                            <td><input type="text" name="tanam_<?= $k->id ?>"
-                                                    value="<?= isset($tanam[$k->id]) ? $tanam[$k->id]->luas_tanam : '' ?>">
+                                            <td><input type="text" name="tanam_<?= $k->id ?>" class="form-control"
+                                                    value="<?= set_value('tanam_' . $k->id, isset($tanam[$k->id]) ? $tanam[$k->id]->luas_tanam : '') ?>">
                                             </td>
-                                            <td><input type="text" name="panen_<?= $k->id ?>"
-                                                    value="<?= isset($panen[$k->id]) ? $panen[$k->id]->luas_panen : '' ?>">
+                                            <td><input type="text" name="panen_<?= $k->id ?>" class="form-control"
+                                                    value="<?= set_value('panen_' . $k->id, isset($panen[$k->id]) ? $panen[$k->id]->luas_panen : '') ?>">
                                             </td>
-                                            <td><input type="text" name="produksi_<?= $k->id ?>"
-                                                    value="<?= isset($produksi[$k->id]) ? $produksi[$k->id]->jumlah_produksi : '' ?>">
+                                            <td><input type="text" name="produksi_<?= $k->id ?>" class="form-control"
+                                                    value="<?= set_value('produksi_' . $k->id, isset($produksi[$k->id]) ? $produksi[$k->id]->jumlah_produksi : '') ?>">
                                             </td>
                                         </tr>
                                         <?php endforeach; ?>
@@ -112,10 +114,9 @@ $(document).ready(function() {
     $('#kecamatan').change(function() {
         var kecamatan_id = $(this).val(); // Ambil ID Kecamatan
 
-        // Jika kecamatan dipilih
         if (kecamatan_id) {
             $.ajax({
-                url: "<?= base_url('inputlaporan/get_desa_by_kecamatan') ?>", // Panggil Controller
+                url: "<?= base_url('inputlaporan/get_desa_by_kecamatan') ?>",
                 type: "POST",
                 data: {
                     kecamatan_id: kecamatan_id
@@ -124,8 +125,10 @@ $(document).ready(function() {
                 success: function(data) {
                     $('#desa').html('<option value="">-- Pilih Desa --</option>');
                     $.each(data, function(key, value) {
-                        $('#desa').append('<option value="' + value.id + '">' +
-                            value.desa + '</option>');
+                        let selected = value.id == "<?= set_value('desa_id') ?>" ?
+                            'selected' : '';
+                        $('#desa').append('<option value="' + value.id + '" ' +
+                            selected + '>' + value.desa + '</option>');
                     });
                 }
             });
@@ -133,5 +136,11 @@ $(document).ready(function() {
             $('#desa').html('<option value="">-- Pilih Desa --</option>');
         }
     });
+
+    // Trigger sekali saat halaman dimuat ulang, jika ada kecamatan yang sudah dipilih
+    var selectedKecamatan = "<?= set_value('kecamatan_id') ?>";
+    if (selectedKecamatan) {
+        $('#kecamatan').val(selectedKecamatan).trigger('change');
+    }
 });
     </script>
